@@ -22,7 +22,6 @@ namespace ETrade.Persistance
             services.AddScoped<IOrderReadRepository,OrderReadRepository>();
             services.AddScoped<ICustomerReadRepository,CustomerReadRepository>();
             services.AddScoped<ICustomerWriteRepository,CustomerWriteRepository>();
-            
 
         }
     }

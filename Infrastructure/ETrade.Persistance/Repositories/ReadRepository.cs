@@ -32,7 +32,7 @@ namespace ETrade.Persistance.Repositories
             }
             return query;
         }
-        public async Task<T> GetById(int id, bool tracking = true)
+        public async Task<T> GetByIdAsync(int id, bool tracking = true)
         {
             var query = Table.AsQueryable();
             if (!tracking)
@@ -78,10 +78,4 @@ namespace ETrade.Persistance.Repositories
  
 
 
-
-Öcnelikle veritabanına bağlandıktan sonra imza metodularının ardından using ile context kullanmak yerine  dependency injection yaparak ve constructor oluşturarak yaparız. Read ve Write işlemlerini ayırdıktan sonra 
- 
- 
- 
- 
  */

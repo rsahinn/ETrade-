@@ -1,4 +1,5 @@
 ﻿using ETrade.Application.Abstractions;
+using ETrade.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -11,32 +12,36 @@ namespace ETrade.API.Controllers
     {
         private readonly IProductReadRepository _productReadRepository;
         private readonly IProductWriteRepository _productWriteRepository;
+        private readonly IOrderWriteRepository _orderWriteRepository;
+        private readonly IOrderReadRepository _orderReadRepository;
+        private readonly ICustomerWriteRepository _customerWriteRepository;
+        private readonly ICustomerReadRepository _customerReadRepository;
 
-        public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository)
+        public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IOrderWriteRepository orderWriteRepository, IOrderReadRepository orderReadRepository, ICustomerWriteRepository customerWriteRepository, ICustomerReadRepository customerReadRepository)
         {
             _productReadRepository = productReadRepository;
             _productWriteRepository = productWriteRepository;
+            _orderWriteRepository = orderWriteRepository;
+            _orderReadRepository = orderReadRepository;
+            _customerWriteRepository = customerWriteRepository;
+            _customerReadRepository = customerReadRepository;
         }
         [HttpGet]
         public async Task Get()
         {
-           await _productWriteRepository.AddRangeAsync(new()
-            {
-                new(){Name="Product1",Stock=20,CreateDate=DateTime.Now,Price=200},
-                new(){Name="Product2",Stock=30,CreateDate=DateTime.Now,Price=300},
-                new(){Name="Product3",Stock=70,CreateDate=DateTime.Now,Price=500},
-                new(){Name="Product4",Stock=10,CreateDate=DateTime.Now,Price=100},
-                new(){Name="Product5",Stock=90,CreateDate=DateTime.Now,Price=700},
-                new(){Name="Product6",Stock=120,CreateDate=DateTime.Now,Price=600}
-            });
-            await _productWriteRepository.SaveAsync();
-        }
-        //[HttpGet]
 
-        //public IActionResult GetAll()
-        //{
-        //    return Ok(_productReadRepository.GetAll());
-        //}
-        
+            //await _customerWriteRepository.AddAsync(new Customer() { Name = "Muhiddin"});
+            //await _customerWriteRepository.SaveAsync();
+
+            //await _orderWriteRepository.AddAsync(new Order { Address = "Türkiye,İstanbul", Description = "BlaBlaBla", CustomerId = 4 });
+            //await _orderWriteRepository.SaveAsync();
+
+            Order order= await _orderReadRepository.GetByIdAsync(3);
+            order.Address = "İstanbul,Esenler";
+            await _orderWriteRepository.SaveAsync();
+
+        }
+
+
     }
 }
